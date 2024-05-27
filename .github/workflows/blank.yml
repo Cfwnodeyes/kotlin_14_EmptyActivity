@@ -22,11 +22,8 @@ jobs:
           distribution: 'adopt'
           java-version: '11'
 
-      - name: Set up Android SDK
-        uses: reactivecircus/android-setup-action@v2
-        with:
-          components: 'build-tools-30.0.3'
-          licenses: 'android-sdk-license-.+'
+      - name: Install Android SDK
+        run: echo y | sdkmanager "platforms;android-30" "build-tools;30.0.3"
 
       - name: Build with Gradle
         run: ./gradlew assembleRelease
