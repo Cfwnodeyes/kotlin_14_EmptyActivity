@@ -3,7 +3,7 @@ name: Build and Release APK
 on:
   push:
     branches:
-      - main  # 你可以更改分支名称
+      - main
 
 jobs:
   build:
@@ -13,11 +13,20 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Ensure Gradle Wrapper has execute permission
+        run: chmod +x gradlew
+
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
           distribution: 'adopt'
           java-version: '11'
+
+      - name: Set up Android SDK
+        uses: reactivecircus/android-setup-action@v2
+        with:
+          components: 'build-tools-30.0.3'
+          licenses: 'android-sdk-license-.+'
 
       - name: Build with Gradle
         run: ./gradlew assembleRelease
